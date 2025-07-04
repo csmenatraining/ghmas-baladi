@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang=ar>
+<head>
+<meta charset=UTF-8>
+<meta name=viewport content="width=device-width, initial-scale=1.0>
+<title>✨ غماس بلدي✨|من السلط جيناكم</title>
+<link rel="apple-touch-icon" href="https://archive.org/services/img/ghmas-logo">
+<link rel="icon" href="https://archive.org/services/img/ghmas-logo"> 
+ 
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Tajawal:wght@400;700;900&display=swap" rel=stylesheet>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css>
+<style>
+:root{
+    --primary-red:#A00000;
+    --secondary-red:#D00000;
+    --luminous-white:#fff;
+    --text-dark:#333;
+    --text-light:#f0f0f0;
+    --card-bg-light:rgba(255,255,255,0.98);
+    --shadow-soft:rgba(0,0,0,0.25);
+    --shadow-intense:rgba(0,0,0,0.7);
+    --gradient-main:linear-gradient(135deg,var(--secondary-red) 0,var(--primary-red) 100%);
+    --gradient-reverse:linear-gradient(135deg,var(--primary-red) 0,var(--secondary-red) 100%);
+    --bg-glow-start:rgba(208,0,0,0.9);
+    --bg-glow-end:rgba(160,0,0,0.9);
+    --header-bg-overlay:rgba(160,0,0,0.3);
+    --header-border-bottom:#D00000;
+    --header-shadow:rgba(0,0,0,0.5);
+    --tab-bg:#f0f0f0;
+    --tab-border:#D00000;
+    --tab-text:#555;
+    --tab-active-bg:linear-gradient(to right,#D00000,#A00000);
+    --tab-active-text:#fff;
+    --tab-active-shadow:0 5px 15px rgba(160,0,0,0.6);
+    --category-section-bg:rgba(255,255,255,0.05); /* تم التعديل هنا: شفاف مع قليل من البياض */
+    /* متغيرات إضافية للتطريز البارز */
+    --embroidery-glow-strong: 0 0 40px rgba(255,0,0,0.9), 0 0 80px rgba(255,50,50,0.6);
+    --embroidery-text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    --card-hover-shadow-enhanced: 0 20px 50px var(--shadow-intense), 0 0 45px var(--secondary-red);
+    --new-tag-shadow-enhanced: 0 0 15px var(--secondary-red), 0 0 25px rgba(255,0,0,0.7);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    font-family:'Cairo',sans-serif;
+    background-color:transparent; /* تم التعديل هنا: شفاف */
+    color:var(--text-dark);
+    line-height:1.6;
+    overflow-x:hidden;
+    direction:rtl;
+    text-align:right;
+    font-size:17px;
+    position:relative
+}
+
+#animated-full-background{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:var(--primary-red);
+    z-index:-1;
+    overflow:hidden;
+    filter:brightness(1.1) saturate(1.1);
+    animation:backgroundShift 30s ease-in-out infinite alternate;
+    background-image:repeating-linear-gradient(45deg,rgba(255,255,255,0.05) 0,rgba(255,255,255,0.05) 1px,transparent 1px,transparent 10px),repeating-linear-gradient(-45deg,rgba(255,255,255,0.05) 0,rgba(255,255,255,0.05) 1px,transparent 1px,transparent 10px);
+    background-size:20px 20px
+}
+@keyframes backgroundShift{
+    0%{background-position:0 50%}
+    100%{background-position:100% 50%}
+}
+#animated-full-background::before{
+    content:'';
+    position:absolute;
+    top:-50%;
+    left:-50%;
+    width:200%;
+    height:200%;
+    background:radial-gradient(circle at center,rgba(255,255,255,0.1) 0,transparent 50%);
+    opacity:.4;
+    animation:backgroundGlow 15s ease-in-out infinite alternate;
+    pointer-events:none
+}
+@keyframes backgroundGlow{
+    0%{transform:scale(1);opacity:.4}
+    50%{transform:scale(1.1);opacity:.5}
+    100%{transform:scale(1);opacity:.4}
+}
+.food-particle{
+    position:absolute;
+    font-size:0;
+    opacity:0;
+    pointer-events:none;
+    filter:drop-shadow(0 0 15px rgba(255,255,255,0.9)); /* زيادة بروز الجسيمات */
+    animation:moveParticle linear infinite
+}
+@keyframes moveParticle{
+    0%{transform:translate(var(--x-start,0vw),var(--y-start,0vh)) scale(0.3) rotate(0deg);opacity:0}
+    10%{opacity:.9}
+    90%{opacity:.9}
+    100%{transform:translate(var(--x-end,100vw),var(--y-end,100vh)) scale(1.3) rotate(var(--rotate-end,360deg));opacity:0}
+}
+
+#intro-screen{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:linear-gradient(to bottom,var(--secondary-red),var(--primary-red));
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    opacity:1;
+    transition:opacity 1.5s ease-out;
+    overflow:hidden
+}
+#intro-screen.hidden{
+    opacity:0;
+    pointer-events:none;
+}
+.intro-logo{
+    width:160px;
+    height:160px;
+    border-radius:50%;
+    overflow:hidden;
+    background-color:var(--luminous-white);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:30px;
+    box-shadow:var(--embroidery-glow-strong), 0 0 60px var(--secondary-red); /* تعزيز توهج الشعار */
+    border: 5px solid var(--luminous-white); /* حد أبيض أكثر بروزًا */
+    transform:scale(0);
+    opacity:0;
+    animation:logoPopIn 1s ease-out forwards;
+    animation-delay:.2s;
+    position:relative;
+    z-index:10
+}
+.intro-logo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    animation:logoSingleSpin 1.5s ease-in-out forwards
+}
+@keyframes logoPopIn{
+    0%{transform:scale(0);opacity:0}
+    80%{transform:scale(1.1);opacity:1}
+    100%{transform:scale(1);opacity:1}
+}
+@keyframes logoSingleSpin{
+    0%{transform:rotate(0deg)}
+    100%{transform:rotate(360deg)}
+}
+.intro-text{
+    font-family:'Tajawal',sans-serif;
+    font-size:3.2em;
+    color:var(--luminous-white);
+    text-shadow:0 0 25px var(--primary-red),0 0 50px var(--secondary-red); /* تعزيز ظل النص */
+    opacity:0;
+    transform:translateY(50px);
+    animation:textFadeIn 1.5s ease-out forwards;
+    animation-delay:.8s;
+    position:relative;
+    z-index:10
+}
+@keyframes textFadeIn{
+    to{opacity:1;transform:translateY(0)}
+}
+.loading-text{
+    font-family:'Cairo',sans-serif;
+    font-size:1.3em;
+    color:var(--luminous-white);
+    margin-top:20px;
+    opacity:0;
+    animation:fadeIn 1s ease-out forwards;
+    animation-delay:2s;
+    text-shadow:0 0 15px rgba(0,0,0,0.8); /* تعزيز ظل النص */
+}
+@keyframes fadeIn{
+    to{opacity:1}
+}
+.loading-text span{
+    animation:blink 1s infinite steps(1,start);
+    opacity:0
+}
+.loading-text span:nth-child(1){animation-delay:2.5s}
+.loading-text span:nth-child(2){animation-delay:2.6s}
+.loading-text span:nth-child(3){animation-delay:2.7s}
+@keyframes blink{
+    0%,100%{opacity:0}
+    50%{opacity:1}
+}
+.loading-bar-container{
+    width:75%;
+    max-width:400px;
+    height:10px;
+    background-color:var(--luminous-white);
+    border-radius:5px;
+    margin-top:30px;
+    overflow:hidden;
+    box-shadow:inset 0 0 8px rgba(0,0,0,0.4); /* تعزيز ظل الشريط */
+    opacity:0;
+    animation:fadeIn 1s ease-out forwards;
+    animation-delay:2.2s
+}
+.loading-bar{
+    width:0;
+    height:100%;
+    background:linear-gradient(to right,#FF0000,#A00000);
+    border-radius:50px;
+    animation:fillBar 3.5s ease-out forwards;
+    animation-delay:.5s;
+    box-shadow:0 0 20px #f00; /* تعزيز توهج شريط التحميل */
+}
+@keyframes fillBar{
+    0%{width:0}
+    100%{width:100%}
+}
+.intro-burst-container{
+    position:absolute;
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden
+}
+.intro-burst-particle{
+    position:absolute;
+    font-size:0;
+    opacity:0;
+    animation:burstOut 1.5s ease-out forwards;
+    filter:drop-shadow(0 0 15px var(--luminous-white)); /* تعزيز توهج الجسيمات المتفجرة */
+}
+@keyframes burstOut{
+    0%{transform:scale(0) translate(0,0);opacity:0}
+    20%{opacity:1}
+    100%{transform:scale(1.8) translate(var(--x-offset),var(--y-offset));opacity:0}
+}
+
+#main-content{
+    opacity:0;
+    transform:translateY(60px);
+    transition:opacity 1.5s ease-out,transform 1.5s ease-out;
+    max-width:1250px;
+    margin:0 auto;
+    position:relative;
+    z-index:10;
+    /* تأكد من أن المحتوى الرئيسي يظهر */
+    display: none; /* يتم التحكم بها بواسطة JS */
+    pointer-events: none; /* يتم التحكم بها بواسطة JS */
+}
+#main-content.visible{
+    opacity:1;
+    transform:translateY(0);
+    display: block !important; /* هام جداً لجعل المحتوى مرئياً */
+    pointer-events: auto !important; /* هام جداً لجعل المحتوى قابلاً للتفاعل */
+}
+
+.hidden{display:none}
+
+.header{
+    text-align:center;
+    padding-top:15px;
+    padding-left:20px;
+    padding-right:20px;
+    padding-bottom:0;
+    background:rgba(255,255,255,0.95);
+    border-radius:0 0 45px 45px;
+    box-shadow:0 10px 30px var(--header-shadow);
+    position:sticky;
+    top:0;
+    width:100%;
+    z-index:100;
+    border-bottom:5px solid var(--header-border-bottom);
+    backdrop-filter:blur(5px);
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    align-items:center;
+    height:auto;
+    overflow:hidden;
+    position:relative;
+    will-change:transform
+}
+.header-video{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-2;
+    filter:brightness(0.4) saturate(1.8) hue-rotate(340deg);
+    transition:filter .5s ease-in-out
+}
+.video-overlay{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:var(--header-bg-overlay);
+    z-index:-1
+}
+.header-content{
+    position:relative;
+    z-index:1;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding-bottom:10px
+}
+.header-logo-circle{
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    overflow:hidden;
+    background-color:var(--luminous-white);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:10px;
+    box-shadow:0 0 25px var(--primary-red),0 0 50px var(--secondary-red); /* تعزيز توهج الشعار */
+    border:5px solid var(--secondary-red); /* حد أكثر بروزًا */
+}
+.header-logo-circle img{
+    width:100%;
+    height:100%;
+    object-fit:cover
+}
+.main-title{
+    font-family:'Tajawal',sans-serif;
+    font-size:2.8em;
+    margin-bottom:0;
+    color:var(--luminous-white);
+    text-shadow:0 0 15px rgba(0,0,0,1),0 0 30px var(--primary-red); /* تعزيز ظل النص */
+    animation:titlePulse 2s infinite alternate
+}
+@keyframes titlePulse{
+    from{transform:scale(1);text-shadow:0 0 15px rgba(0,0,0,1),0 0 30px var(--primary-red)}
+    to{transform:scale(1.03);text-shadow:0 0 20px rgba(0,0,0,1),0 0 40px var(--secondary-red)}
+}
+.main-title .highlight{
+    color:var(--text-dark);
+    background:var(--luminous-white);
+    padding:5px 18px;
+    border-radius:18px;
+    box-shadow:0 0 20px var(--primary-red); /* تعزيز توهج التظليل */
+    display:inline-block;
+    transform:rotate(-2deg);
+    text-shadow: none; /* إزالة الظل النصي من هنا ليتماشى مع الخلفية البيضاء */
+}
+
+.nav-tabs{
+    display:flex;
+    justify-content:center;
+    width:100%;
+    padding:10px 0;
+    background:var(--tab-bg);
+    border-top:1px solid rgba(0,0,0,0.1);
+    border-radius:0 0 40px 40px;
+    box-shadow:inset 0 5px 15px rgba(0,0,0,0.15); /* تعزيز ظل التبويبات */
+}
+.nav-tab-button{
+    background:transparent;
+    border:0;
+    cursor:pointer;
+    padding:10px 20px;
+    margin:0 8px;
+    font-family:'Cairo',sans-serif;
+    font-size:1.1em;
+    color:var(--tab-text);
+    font-weight:700;
+    border-radius:25px;
+    transition:all .3s ease-in-out;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:inset 0 0 8px rgba(0,0,0,0.15); /* تعزيز ظل الأزرار */
+    text-shadow: var(--embroidery-text-shadow); /* ظل نصي لأزرار التنقل */
+}
+.nav-tab-button:hover{
+    color:var(--secondary-red);
+    transform:translateY(-3px); /* زيادة حركة الهوفر */
+    box-shadow:inset 0 0 10px rgba(0,0,0,0.2), 0 5px 15px rgba(0,0,0,0.2); /* ظل أقوى عند الهوفر */
+}
+.nav-tab-button.active{
+    background:var(--tab-active-bg);
+    color:var(--tab-active-text);
+    box-shadow:var(--tab-active-shadow), 0 0 25px rgba(160,0,0,0.8); /* تعزيز توهج الزر النشط */
+    transform:translateY(-5px); /* زيادة حركة الزر النشط */
+    border: 1px solid var(--luminous-white); /* إضافة حد أبيض للزر النشط */
+    text-shadow: 0 0 10px rgba(0,0,0,0.8); /* ظل نصي أقوى للزر النشط */
+}
+.nav-tab-button.active .tab-icon{
+    filter:drop-shadow(0 0 8px rgba(255,255,255,1)); /* تعزيز توهج الأيقونة النشطة */
+}
+.tab-icon{
+    font-size:1.3em;
+    color:inherit;
+    transition:transform .3s ease
+}
+
+#header-spacer{display:none!important;height:0!important}
+
+.menu-container{
+    padding-bottom:50px;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    margin:0 auto;
+    max-width:1250px
+}
+.menu-section{
+    display:none;
+    width:95%;
+    max-width:950px;
+    margin-top:40px;
+    border-radius:25px;
+    background:var(--category-section-bg); /* تم التعديل هنا: استخدام المتغير الجديد */
+    box-shadow:0 18px 45px var(--shadow-intense); /* تعزيز ظل القسم */
+    overflow:hidden;
+    border:4px solid var(--primary-red); /* حد أثخن */
+    padding:35px;
+    animation:fadeInContent .5s ease-out forwards;
+    position: relative; /* لتمكين استخدام pseudo-elements للزخرفة */
+}
+/* زخرفة إضافية لأقسام القائمة (تطريز) */
+.menu-section::before, .menu-section::after {
+    content: '';
+    position: absolute;
+    width: 25px; /* حجم الزاوية */
+    height: 25px;
+    border: 3px solid var(--secondary-red);
+    border-radius: 5px;
+    opacity: 0.7;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    z-index: 2;
+}
+.menu-section::before {
+    top: -2px; /* لتظهر على الحدود */
+    right: -2px;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-left: none;
+    border-bottom: none;
+}
+.menu-section::after {
+    bottom: -2px;
+    left: -2px;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 0;
+    border-right: none;
+    border-top: none;
+}
+
+
+.menu-section.active{display:block}
+@keyframes fadeInContent{
+    from{opacity:0;transform:translateY(20px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+.section-title{
+    font-family:'Tajawal',sans-serif;
+    font-size:2.2em;
+    color:var(--luminous-white); /* تم التعديل هنا: لجعل النص يظهر على الخلفية الحمراء */
+    text-align:center;
+    margin-bottom:35px;
+    text-shadow:0 0 12px var(--secondary-red), 0 0 20px rgba(255,0,0,0.5); /* تعزيز ظل العنوان */
+    position:relative;
+    padding-bottom:18px;
+    border-bottom:3px dashed rgba(255,255,255,0.6); /* تم التعديل هنا: خط أبيض ليظهر على الخلفية الحمراء */
+}
+.section-title::after{
+    content:'';
+    position:absolute;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:90px; /* عرض أطول للخط الزخرفي */
+    height:5px; /* سمك الخط الزخرفي */
+    background:var(--gradient-main);
+    border-radius:4px;
+    box-shadow:0 0 15px var(--primary-red), 0 0 25px rgba(255,0,0,0.7); /* تعزيز توهج الخط */
+}
+
+.products-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:35px;
+    justify-content:center
+}
+.product-card{
+    background:rgba(255,255,255,0.85); /* تم التعديل هنا: لجعل البطاقات شبه شفافة */
+    border-radius:20px;
+    overflow:hidden;
+    text-align:center;
+    padding:25px;
+    box-shadow:0 15px 35px var(--shadow-soft), inset 0 0 10px rgba(0,0,0,0.1); /* ظل خارجي وداخلي */
+    border:3px solid var(--primary-red); /* حد أثخن */
+    transition:transform .3s ease-out,box-shadow .3s ease,border-color .3s ease;
+    position:relative;
+    z-index:1;
+}
+.product-card:hover{
+    transform:translateY(-12px) scale(1.04); /* حركة أكبر عند الهوفر */
+    box-shadow:var(--card-hover-shadow-enhanced), inset 0 0 15px rgba(0,0,0,0.2); /* تعزيز الظل عند الهوفر */
+    border-color:var(--secondary-red);
+}
+.product-card img{
+    width:100%;
+    height:220px; /* تم التعديل هنا: زيادة الارتفاع */
+    object-fit:cover;
+    border-radius:18px;
+    margin-bottom:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.5); /* تعزيز ظل الصورة */
+    border:8px solid var(--primary-red); /* تم التعديل هنا: زيادة سمك الحد */
+    transition:transform .3s ease,border-color .3s ease
+}
+.product-card:hover img{
+    transform:scale(1.03); /* تكبير الصورة قليلاً عند الهوفر */
+    border-color:var(--secondary-red);
+}
+.product-card h3{
+    font-family:'Tajawal',sans-serif;
+    font-size:1.9em; /* تم التعديل هنا: زيادة حجم الخط */
+    color:var(--primary-red);
+    margin-bottom:10px;
+    text-shadow:0 0 10px rgba(0,0,0,0.4); /* تعزيز ظل العنوان الفرعي */
+}
+.product-card .new-tag{
+    background:var(--secondary-red);
+    color:var(--luminous-white);
+    font-size:.85em; /* تكبير الخط قليلاً */
+    padding:5px 9px; /* زيادة حجم البادينغ */
+    border-radius:7px; /* زيادة انحناء الزوايا */
+    vertical-align:super;
+    margin-right:6px;
+    box-shadow:var(--new-tag-shadow-enhanced); /* تعزيز توهج "جديد" */
+    animation:newTagBounce 1s infinite alternate, pulseGlow 1.5s infinite alternate; /* إضافة نبض توهج */
+    transform-origin: center bottom; /* لتأثير الارتداد */
+}
+@keyframes newTagBounce{
+    0%{transform:translateY(0) scale(1)}
+    50%{transform:translateY(-5px) scale(1.05)} /* حركة ارتداد أكبر */
+    100%{transform:translateY(0) scale(1)}
+}
+@keyframes pulseGlow {
+    0% { box-shadow: var(--new-tag-shadow-enhanced); }
+    100% { box-shadow: 0 0 20px var(--secondary-red), 0 0 35px rgba(255,0,0,0.7); }
+}
+
+.product-card p{
+    font-size:1em;
+    color:var(--text-dark);
+    margin-bottom:15px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1); /* ظل خفيف للوصف */
+}
+.product-card .price{
+    font-family:'Cairo',sans-serif;
+    font-size:2.3em; /* تم التعديل هنا: تكبير السعر */
+    font-weight:900;
+    color:var(--secondary-red);
+    display:block;
+    margin-bottom:25px;
+    text-shadow:0 0 12px var(--primary-red), 0 0 20px rgba(255,0,0,0.6); /* تعزيز ظل السعر */
+}
+.order-button{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--gradient-main);
+    color:var(--luminous-white);
+    padding:14px 30px;
+    border-radius:35px;
+    font-weight:bold;
+    font-size:1.1em;
+    box-shadow:0 10px 25px var(--shadow-intense); /* ظل زر الطلب */
+    transition:all .3s ease-out;
+    border:0;
+    cursor:pointer;
+    text-transform:uppercase;
+    letter-spacing:.8px;
+    position:relative;
+    overflow:hidden;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.6); /* ظل نصي لزر الطلب */
+}
+.order-button::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:40%;
+    height:100%;
+    background:rgba(255,255,255,0.7); /* لمعان أقوى */
+    transition:left .4s ease-out; /* انتقال أبطأ قليلاً */
+    transform:skewX(-25deg); /* زاوية أكبر للانحراف */
+}
+.order-button:hover::before{
+    left:100%;
+}
+.order-button i{
+    margin-right:10px;
+    transition:transform .3s ease;
+}
+.order-button:hover{
+    background:var(--gradient-reverse);
+    transform:translateY(-5px); /* حركة أكبر عند الهوفر */
+    box-shadow:0 15px 30px var(--shadow-intense),0 0 25px var(--primary-red); /* تعزيز ظل وتوهج الزر عند الهوفر */
+}
+.order-button:hover i{
+    transform:translateX(8px); /* حركة أيقونة أكبر */
+}
+
+.footer{
+    text-align:center;
+    padding:25px;
+    background:var(--primary-red);
+    color:var(--text-light);
+    font-size:.95em;
+    margin-top:50px;
+    box-shadow:0 -8px 20px rgba(0,0,0,0.4); /* ظل أقوى للفوتر */
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:15px;
+    border-top:4px solid var(--secondary-red); /* حد أثخن */
+}
+.footer .instagram-button{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:55px; /* حجم أكبر قليلاً */
+    height:55px; /* حجم أكبر قليلاً */
+    border-radius:50%;
+    background:var(--secondary-red);
+    color:var(--luminous-white);
+    font-size:2em; /* أيقونة أكبر */
+    text-decoration:none;
+    box-shadow:0 0 12px var(--primary-red),0 0 25px var(--secondary-red); /* تعزيز توهج الزر */
+    transition:all .3s ease-in-out;
+    border:3px solid var(--luminous-white); /* حد أثخن */
+}
+.footer .instagram-button:hover{
+    transform:scale(1.15); /* تكبير أكبر عند الهوفر */
+    box-shadow:0 0 18px var(--primary-red),0 0 35px var(--secondary-red); /* توهج أقوى عند الهوفر */
+}
+
+/* Modal Styles */
+.call-options-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 200; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none; /* Allows clicks through when hidden */
+}
+
+.call-options-modal.active {
+    opacity: 1;
+    pointer-events: auto; /* Disables clicks through when active */
+}
+
+.modal-content {
+    background-color: var(--card-bg-light);
+    margin: auto;
+    padding: 30px;
+    border-radius: 20px;
+    width: 85%;
+    max-width: 400px;
+    box-shadow: 0 10px 40px var(--shadow-intense), 0 0 30px var(--secondary-red);
+    text-align: center;
+    position: relative;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    border: 3px solid var(--primary-red);
+}
+
+.call-options-modal.active .modal-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.modal-content h2 {
+    font-family: 'Tajawal', sans-serif;
+    color: var(--primary-red);
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    text-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient-main);
+    color: var(--luminous-white);
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.1em;
+    box-shadow: 0 8px 20px var(--shadow-intense);
+    transition: all 0.3s ease-out;
+    border: none;
+    cursor: pointer;
+    text-decoration: none; /* For the <a> tag */
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+.modal-button:hover {
+    background: var(--gradient-reverse);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px var(--shadow-intense), 0 0 20px var(--primary-red);
+}
+
+.modal-button i {
+    margin-left: 10px; /* Adjusted for RTL */
+    margin-right: 0; /* Adjusted for RTL */
+    font-size: 1.2em;
+}
+
+.modal-close-button {
+    position: absolute;
+    top: 15px;
+    left: 15px; /* Adjusted for RTL */
+    color: var(--text-dark);
+    font-size: 2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+    background: transparent;
+    border: none;
+    padding: 5px;
+    border-radius: 50%;
+    line-height: 1;
+}
+
+.modal-close-button:hover {
+    color: var(--primary-red);
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Media Queries - الحفاظ على الاستجابة مع التعديلات الجديدة */
+body{font-size:15px}
+.header{padding-top:10px;padding-left:10px;padding-right:10px;border-radius:0 0 25px 25px;height:auto}
+.header-logo-circle{width:80px;height:80px;margin-bottom:8px; border:3px solid var(--secondary-red);} /* تعديل الحد في الميديا كويري */
+.main-title{font-size:1.8em}
+.main-title .highlight{padding:4px 15px; border-radius:15px;}
+.nav-tabs{padding:8px 0;border-radius:0 0 25px 25px;flex-wrap:wrap;gap:5px}
+.nav-tab-button{padding:8px 15px;margin:0 3px;font-size:.9em;gap:5px; box-shadow:inset 0 0 6px rgba(0,0,0,0.1);}
+.nav-tab-button.active{box-shadow:var(--tab-active-shadow), 0 0 15px rgba(160,0,0,0.7); transform:translateY(-4px); border:1px solid var(--luminous-white);}
+.tab-icon{font-size:1em}
+.intro-logo{width:130px;height:130px;margin-bottom:20px; box-shadow:0 0 25px var(--primary-red), 0 0 50px var(--secondary-red); border:4px solid var(--luminous-white);}
+.intro-text{font-size:2em}
+.loading-text{font-size:1.1em;margin-top:15px}
+.loading-bar-container{width:85%;margin-top:20px;height:7px}
+.loading-bar{box-shadow:0 0 10px #f00;}
+.intro-burst-particle{filter:drop-shadow(0 0 10px var(--luminous-white));}
+.menu-container{padding-bottom:35px}
+.menu-section{margin-top:20px;border-radius:18px;width:98%;padding:18px; border:3px solid var(--primary-red); box-shadow:0 12px 30px var(--shadow-intense); background:rgba(255,255,255,0.03);} /* تم التعديل هنا: ليتناسب مع شاشات صغيرة */
+.menu-section::before, .menu-section::after {width: 20px; height: 20px; border: 2px solid var(--secondary-red); box-shadow: 0 0 8px rgba(255, 0, 0, 0.4);}
+
+.section-title{font-size:1.6em;margin-bottom:25px; text-shadow:0 0 8px var(--secondary-red); border-bottom:2px dashed rgba(255,255,255,0.5);} /* تم التعديل هنا */
+.section-title::after{width:60px; height:3px; box-shadow:0 0 10px var(--primary-red);}
+
+.products-grid{grid-template-columns:1fr;gap:20px}
+.product-card{padding:18px;border-radius:15px; box-shadow:0 10px 25px var(--shadow-soft), inset 0 0 8px rgba(0,0,0,0.1); border:2px solid var(--primary-red); background:rgba(255,255,255,0.85);} /* تم التعديل هنا: ليتناسب مع شاشات صغيرة */
+.product-card:hover{transform:translateY(-8px) scale(1.02); box-shadow:0 15px 35px var(--shadow-intense),0 0 25px var(--secondary-red), inset 0 0 12px rgba(0,0,0,0.15);}
+.product-card img{
+    width:100%;
+    height:180px; /* تم التعديل هنا: زيادة الارتفاع للشاشات الصغيرة */
+    object-fit:cover;
+    border-radius:12px;
+    margin-bottom:12px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.3);
+    border:6px solid var(--primary-red); /* تم التعديل هنا: زيادة سمك الحد للشاشات الصغيرة */
+}
+.product-card h3{font-size:1.4em; /* تم التعديل هنا */ text-shadow:0 0 6px rgba(0,0,0,0.2);}
+.product-card .new-tag{font-size:.8em;padding:4px 8px;border-radius:6px; box-shadow:0 0 10px var(--secondary-red), 0 0 15px rgba(255,0,0,0.5);}
+.product-card p{font-size:.9em;margin-bottom:10px; text-shadow:none;}
+.product-card .price{font-size:1.8em; /* تم التعديل هنا */ margin-bottom:18px; text-shadow:0 0 8px var(--primary-red);}
+.order-button{padding:10px 20px;font-size:.9em; box-shadow:0 6px 15px var(--shadow-intense); text-shadow: 0 1px 3px rgba(0,0,0,0.6);}
+.order-button:hover{transform:translateY(-3px); box-shadow:0 10px 20px var(--shadow-intense),0 0 15px var(--primary-red);}
+.order-button::before{transform:skewX(-15deg);}
+.order-button:hover i{transform:translateX(4px);}
+.footer{margin-top:30px;padding:20px;font-size:.85em;gap:10px; box-shadow:0 -6px 15px rgba(0,0,0,0.3); border-top:3px solid var(--secondary-red);}
+.footer .instagram-button{width:45px;height:45px;font-size:1.8em; box-shadow:0 0 8px var(--primary-red),0 0 15px var(--secondary-red); border:2px solid var(--luminous-white);}
+.footer .instagram-button:hover{transform:scale(1.1); box-shadow:0 0 12px var(--primary-red),0 0 25px var(--secondary-red);}
+
+@media(min-width:768px){
+    body{font-size:17px}
+    .header{padding-top:10px;padding-left:10px;padding-right:10px;border-radius:0 0 35px 35px}
+    .header-logo-circle{width:80px;height:80px;margin-bottom:8px; border:3px solid var(--secondary-red);} /* تعديل الحد في الميديا كويري */
+    .main-title{font-size:2.5em}
+    .main-title .highlight{padding:4px 15px; border-radius:15px;}
+    .nav-tabs{padding:10px 0;border-radius:0 0 35px 35px;flex-wrap:nowrap}
+    .nav-tab-button{padding:10px 18px;margin:0 5px;font-size:1em;gap:6px; box-shadow:inset 0 0 7px rgba(0,0,0,0.12);}
+    .nav-tab-button.active{box-shadow:var(--tab-active-shadow), 0 0 20px rgba(160,0,0,0.7); transform:translateY(-4px); border:1px solid var(--luminous-white);}
+    .tab-icon{font-size:1.2em}
+    .intro-logo{width:130px;height:130px;margin-bottom:20px; box-shadow:0 0 25px var(--primary-red), 0 0 50px var(--secondary-red); border:4px solid var(--luminous-white);}
+    .intro-text{font-size:2em}
+    .loading-text{font-size:1.1em;margin-top:15px}
+    .loading-bar-container{width:85%;margin-top:20px;height:7px}
+    .loading-bar{box-shadow:0 0 10px #f00;}
+    .intro-burst-particle{filter:drop-shadow(0 0 10px var(--luminous-white));}
+    .menu-container{padding-bottom:45px}
+    .menu-section{max-width:850px;margin-top:30px;border-radius:22px;padding:25px; border:3px solid var(--primary-red); box-shadow:0 15px 40px var(--shadow-intense); background:rgba(255,255,255,0.04);} /* تم التعديل هنا */
+    .menu-section::before, .menu-section::after {width: 22px; height: 22px; border: 3px solid var(--secondary-red); box-shadow: 0 0 8px rgba(255, 0, 0, 0.4);}
+
+    .section-title{font-size:1.8em;margin-bottom:30px; text-shadow:0 0 10px var(--secondary-red), 0 0 18px rgba(255,0,0,0.4); color:var(--luminous-white);} /* تم التعديل هنا */
+    .section-title::after{width:70px; height:4px; box-shadow:0 0 12px var(--primary-red);}
+
+    .products-grid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:25px}
+    .product-card{padding:20px;border-radius:18px; box-shadow:0 12px 30px var(--shadow-soft), inset 0 0 9px rgba(0,0,0,0.1); border:2px solid var(--primary-red); background:rgba(255,255,255,0.85);} /* تم التعديل هنا: ليتناسب مع شاشات صغيرة */
+    .product-card:hover{transform:translateY(-10px) scale(1.03); box-shadow:0 15px 35px var(--shadow-intense),0 0 25px var(--secondary-red), inset 0 0 12px rgba(0,0,0,0.15);}
+    .product-card img{
+        width:100%;
+        height:190px; /* تم التعديل هنا: زيادة الارتفاع للشاشات المتوسطة */
+        object-fit:cover;
+        border-radius:15px;
+        margin-bottom:15px;
+        box-shadow:0 8px 20px rgba(0,0,0,0.4);
+        border:7px solid var(--primary-red); /* تم التعديل هنا: زيادة سمك الحد للشاشات المتوسطة */
+    }
+    .product-card h3{font-size:1.5em; /* تم التعديل هنا */ text-shadow:0 0 6px rgba(0,0,0,0.2);}
+    .product-card .new-tag{font-size:.8em;padding:4px 8px;border-radius:6px; box-shadow:var(--new-tag-shadow-enhanced);}
+    .product-card p{font-size:.95em}
+    .product-card .price{font-size:1.8em; /* تم التعديل هنا */ margin-bottom:18px; text-shadow:0 0 10px var(--primary-red);}
+    .order-button{padding:10px 20px;font-size:.9em; box-shadow:0 6px 15px var(--shadow-intense); text-shadow: 0 1px 3px rgba(0,0,0,0.6);}
+    .order-button:hover{transform:translateY(-3px); box-shadow:0 10px 20px var(--shadow-intense),0 0 15px var(--primary-red);}
+    .order-button::before{transform:skewX(-15deg);}
+    .order-button:hover i{transform:translateX(4px);}
+    .footer{margin-top:30px;padding:20px;font-size:.85em;gap:10px; box-shadow:0 -6px 15px rgba(0,0,0,0.3); border-top:3px solid var(--secondary-red);}
+    .footer .instagram-button{width:45px;height:45px;font-size:1.8em; box-shadow:0 0 8px var(--primary-red),0 0 15px var(--secondary-red); border:2px solid var(--luminous-white);}
+    .footer .instagram-button:hover{transform:scale(1.1); box-shadow:0 0 12px var(--primary-red),0 0 25px var(--secondary-red);}
+}
+@media(min-width:992px){
+    .header{padding-top:20px;padding-left:20px;padding-right:20px;border-radius:0 0 35px 35px}
+    .header-logo-circle{width:90px;height:90px;margin-bottom:10px; border:4px solid var(--secondary-red);}
+    .main-title{font-size:2.5em}
+    .nav-tabs{padding:12px 0;border-radius:0 0 45px 45px}
+    .nav-tab-button{padding:12px 22px;margin:0 8px;font-size:1.1em;gap:8px; box-shadow:inset 0 0 8px rgba(0,0,0,0.1);}
+    .nav-tab-button.active{box-shadow:var(--tab-active-shadow), 0 0 25px rgba(160,0,0,0.8); transform:translateY(-5px); border:1px solid var(--luminous-white);}
+    .tab-icon{font-size:1.3em}
+    .intro-logo{width:160px;height:160px; box-shadow:var(--embroidery-glow-strong); border:5px solid var(--luminous-white);}
+    .intro-text{font-size:3.2em}
+    .loading-text{font-size:1.3em;margin-top:20px}
+    .loading-bar-container{width:75%;margin-top:25px;height:10px}
+    .loading-bar{box-shadow:0 0 15px #f00;}
+    .intro-burst-particle{filter:drop-shadow(0 0 12px var(--luminous-white));}
+    .menu-section{max-width:950px;margin-top:40px;padding:35px; border:4px solid var(--primary-red); background:rgba(255,255,255,0.05);} /* تم التعديل هنا */
+
+    .section-title{font-size:2.2em;margin-bottom:35px; text-shadow:0 0 12px var(--secondary-red), 0 0 20px rgba(255,0,0,0.5); color:var(--luminous-white);} /* تم التعديل هنا */
+    .section-title::after{width:90px; height:5px; box-shadow:0 0 15px var(--primary-red);}
+
+    .products-grid{gap:30px}
+    .product-card{padding:25px; box-shadow:0 15px 35px var(--shadow-soft), inset 0 0 10px rgba(0,0,0,0.1); border:3px solid var(--primary-red); background:rgba(255,255,255,0.85);} /* تم التعديل هنا */
+    .product-card:hover{transform:translateY(-12px) scale(1.04); box-shadow:var(--card-hover-shadow-enhanced);}
+    .product-card img{
+        width:100%;
+        height:220px; /* تم التعديل هنا: زيادة الارتفاع للشاشات الكبيرة */
+        object-fit:cover;
+        border-radius:18px;
+        margin-bottom:18px;
+        box-shadow:0 10px 25px rgba(0,0,0,0.5);
+        border:8px solid var(--primary-red); /* تم التعديل هنا: زيادة سمك الحد للشاشات الكبيرة */
+    }
+    .product-card h3{font-size:1.9em; /* تم التعديل هنا */ text-shadow:0 0 10px rgba(0,0,0,0.4);}
+    .product-card .new-tag{font-size:.85em;padding:5px 9px;border-radius:7px; box-shadow:var(--new-tag-shadow-enhanced);}
+    .product-card .price{font-size:2.3em; /* تم التعديل هنا */ text-shadow:0 0 12px var(--primary-red);}
+    .order-button{padding:14px 30px;font-size:1.1em; box-shadow:0 10px 25px var(--shadow-intense);}
+    .footer{margin-top:50px;padding:25px;font-size:.95em}
+    .footer .instagram-button{width:55px;height:55px;font-size:2.2em; box-shadow:0 0 12px var(--primary-red),0 0 25px var(--secondary-red); border:3px solid var(--luminous-white);}
+}
+@media(min-width:1200px){
+    .header{padding-top:25px;padding-left:20px;padding-right:20px}
+    .header-logo-circle{width:120px;height:120px;margin-bottom:15px; border:5px solid var(--secondary-red);}
+    .main-title{font-size:3.5em}
+    .nav-tabs{padding:15px 0}
+    .nav-tab-button{padding:14px 25px;font-size:1.2em; box-shadow:inset 0 0 9px rgba(0,0,0,0.12);}
+    .nav-tab-button.active{box-shadow:var(--tab-active-shadow), 0 0 30px rgba(160,0,0,0.9); transform:translateY(-6px); border:2px solid var(--luminous-white);}
+    .tab-icon{font-size:1.4em}
+    .intro-text{font-size:3.5em}
+    .loading-text{font-size:1.4em}
+    .menu-section{max-width:1050px; border:4px solid var(--primary-red); background:rgba(255,255,255,0.05);} /* تم التعديل هنا */
+
+    .section-title{font-size:2.4em; color:var(--luminous-white);} /* تم التعديل هنا */
+    .products-grid{gap:35px}
+    .product-card{padding:30px; border:4px solid var(--primary-red); background:rgba(255,255,255,0.85);} /* تم التعديل هنا */
+    .product-card img{
+        width:100%;
+        height:240px; /* تم التعديل هنا: زيادة الارتفاع للشاشات الكبيرة جداً */
+    }
+    .product-card h3{font-size:2.1em; /* تم التعديل هنا */}
+    .product-card .price{font-size:2.5em; /* تم التعديل هنا */}
+    .order-button{padding:16px 35px;font-size:1.2em}
+    .footer .instagram-button{width:60px;height:60px;font-size:2.5em; box-shadow:0 0 15px var(--primary-red),0 0 30px var(--secondary-red); border:3px solid var(--luminous-white);}
+}
+
+/* Modal Styles */
+.call-options-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 200; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none; /* Allows clicks through when hidden */
+}
+
+.call-options-modal.active {
+    opacity: 1;
+    pointer-events: auto; /* Disables clicks through when active */
+}
+
+.modal-content {
+    background-color: var(--card-bg-light);
+    margin: auto;
+    padding: 30px;
+    border-radius: 20px;
+    width: 85%;
+    max-width: 400px;
+    box-shadow: 0 10px 40px var(--shadow-intense), 0 0 30px var(--secondary-red);
+    text-align: center;
+    position: relative;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    border: 3px solid var(--primary-red);
+}
+
+.call-options-modal.active .modal-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.modal-content h2 {
+    font-family: 'Tajawal', sans-serif;
+    color: var(--primary-red);
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    text-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient-main);
+    color: var(--luminous-white);
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.1em;
+    box-shadow: 0 8px 20px var(--shadow-intense);
+    transition: all 0.3s ease-out;
+    border: none;
+    cursor: pointer;
+    text-decoration: none; /* For the <a> tag */
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+.modal-button:hover {
+    background: var(--gradient-reverse);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px var(--shadow-intense), 0 0 20px var(--primary-red);
+}
+
+.modal-button i {
+    margin-left: 10px; /* Adjusted for RTL */
+    margin-right: 0; /* Adjusted for RTL */
+    font-size: 1.2em;
+}
+
+.modal-close-button {
+    position: absolute;
+    top: 15px;
+    left: 15px; /* Adjusted for RTL */
+    color: var(--text-dark);
+    font-size: 2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+    background: transparent;
+    border: none;
+    padding: 5px;
+    border-radius: 50%;
+    line-height: 1;
+}
+
+.modal-close-button:hover {
+    color: var(--primary-red);
+    transform: scale(1.1) rotate(5deg);
+}
+
+</style>
+</head>
+<body>
+<div id=intro-screen>
+<div class=intro-burst-container></div>
+<div class=intro-logo>
+<img src=https://archive.org/download/ghmas-logo/Ghmas%20Logo.jpg alt="شعار غماس بلدي">
+</div>
+<div class=intro-text>أهلاً بك في غماس بلدي!</div>
+<div class=loading-text>على طريق السلط<span>.</span><span>.</span><span>.</span></div> 
+<div class=loading-bar-container>
+<div class=loading-bar></div>
+</div>
+</div>
+<div id=animated-full-background></div>
+<div id=main-content class=hidden>
+<header class=header id=main-header>
+<video autoplay loop muted playsinline class=header-video poster="https://via.placeholder.com/1920x1080/A00000/FFFFFF?text=Video+Loading">
+<source src=https://cdn.pixabay.com/video/2021/04/14/71119-537976857_large.mp4 type=video/mp4>
+Your browser does not support the video tag.
+</video>
+<div class=video-overlay></div>
+<div class=header-content>
+<div class=header-logo-circle>
+<img src=https://archive.org/download/ghmas-logo/Ghmas%20Logo.jpg alt="شعار غماس بلدي">
+</div>
+<h1 class=main-title><span class=highlight>غماس بلدي</span></h1>
+</div>
+<div class=nav-tabs id=navTabs>
+<button class="nav-tab-button active" data-target=ghmas-section>
+<span class=tab-icon>🥩</span>
+<span>المشاوي الغماس</span>
+</button>
+<button class=nav-tab-button data-target=meals-section>
+<span class=tab-icon>🍖</span>
+<span>الوجبات</span>
+</button>
+<button class=nav-tab-button data-target=sandwiches-section>
+<span class=tab-icon>🥪</span>
+<span>الساندويشات</span>
+</button>
+<button class=nav-tab-button data-target=sauces-section>
+<span class=tab-icon>🥣</span>
+<span>الإضافات</span>
+</button>
+</div>
+</header>
+<div id=header-spacer></div>
+<main class=menu-container>
+<div class="menu-section active" id=ghmas-section>
+<h2 class=section-title>قسم المشاوي الغماس</h2>
+<div class=products-grid>
+<div class=product-card>
+<img src="https://archive.org/download/20250702_20250702_1440/%D9%85%D8%B4%D9%83%D9%84%20%D8%BA%D9%85%D8%A7%D8%B3%20%28%D9%83%D9%8A%D9%84%D9%88%20%D9%88%D9%86%D8%B5%29.png" alt="مشكل غماس (كيلو ونص)">
+<div class=card-content>
+<h3>مشكل غماس (كيلو ونص) <span class=new-tag>جديد!</span></h3>
+<p>تشكيلة فاخرة من المشاوي الغماس، تكفي لمشاركة الأحباء.</p>
+<span class=price>28.50 د.أ</span>
+<button class=order-button data-product="مشكل غماس (كيلو ونص)">اطلب الآن <i class="fas fa-phone-alt"></i></button>
+</div>
+</div>
+<div class=product-card>
+<img src="https://archive.org/download/20250702_20250702_1440/%D9%86%D8%B5%20%D9%85%D8%B4%D9%83%D9%84%20%D8%BA%D9%85%D8%A7%D8%B3.png" alt="نص مشكل غماس">
+<div class=card-content>
+<h3>نص مشكل غماس</h3>
+<p>نصف كيلو من تشكيلة المشاوي الغماس، خيار مثالي لوجبة متكاملة.</p>
+<span class=price>14.25 د.أ</span>
+<button class=order-button data-product="نص مشكل غماس">اطلب الآن <i class="fas fa-phone-alt"></i></button>
+</div>
+</div>
+<div class=product-card>
+<img src="https://archive.org/download/20250702_20250702_1440/%D9%83%D9%8A%D9%84%D9%88%20%D9%83%D8%A8%D8%A7%D8%A8%20%D8%BA%D9%85%D8%A7%D8%B3.png" alt="كيلو كباب غماس">
+<div class=card-content>
+<h3>كيلو كباب غماس</h3>
+<p>كيلو كامل من كباب الغماس الشهي، محضّر بعناية فائقة.</p>
+<span class=price>18.00 د.أ</span>
+<button class=order-button data-product="كيلو كباب غماس">اطلب الآن <i class="fas fa-phone-alt"></i></button>
+</div>
+</div>
+<div class=product-card>
+<img src="https://archive.org/download/20250702_20250702_1440/%D9%86%D8%B5%20%D9%83%D9%8A%D9%84%D9%88%20%D9%83%D8%A8%D8%A7%D8%A8.png" alt="نص كيلو كباب">
+<div class=card-content>
+<h3>نص كيلو كباب</h3>
+<p>نصف كيلو من كباب الغماس الطازج، مذاق لا يُنسى.</p>
+<span class=price>9.00 د.أ</span>
+<button class=order-button data-product="نص كيلو كباب">اطلب الآن <i class="fas fa-phone-alt"></i></i
+>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class=menu-section id=meals-section>
+<h2 class=section-title>قسم الوجبات</h2>
+<div class=products-grid>
+<div class=product-card>
+<img src="https://archive.org/download/20250704_20250704_1228/%D9%88%D8%AC%D8%A8%D8%A9%20%D9%85%D8%B9%D9%84%D8%A7%D9%82.png
+
+" alt="وجبة معلاق">
+<div class=card-content>
+<h3>وجبة معلاق</h3>
+<p>وجبة شهية من المعلاق الطازج، تقدم مع الأرز والسلطة.</p>
+<span class=price>7.50 د.أ</span>
+<button class=order-button data-product="وجبة معلاق">اطلب الآن <i class="fas fa-phone-alt"></i></button>
+</div>
+</div>
+<div class=product-card>
+<img src="https://archive.org/download/20250702_20250702_1440/%D9%88%D8%AC%D8%A8%D8%A9%20%D9%83%D8%A8%D8%A7%D8%A8.png" alt="وجبة كباب">
+<div class=card-content>
+<h3>وجبة كباب</h3>
+<p>وجبة كباب فاخرة، مشوية بإتقان، مع الخبز الطازج والمقبلات.</p>
+<span class=price>6.75 د.أ</span>
+<button class=order-button data-product="وجبة كباب">اطلب الآن <i class="fas fa-phone-alt"></i></button>
+</div>
+</div>
+<div class=product-card>
+<img src="https://archive.org/download/20250702_20250702_1440/%D9%88%D8%AC%D8%A8%D8%A9%20%D8%B4%D9%8A%D8%B4.png" alt="وجبة شيش">
+<div class=card-content>
+<h3>وجبة شيش</h3>
+<p>وجبة شيش طاووق لذيذة، قطع دجاج متبلة ومشوية، مثالية لوجبة سريعة.</p>
+<span class=price>6.25 د.أ</span>
+<button class=order-button data-product="وجبة شيش">اطلب الآن <i class="fas fa-phone-alt"></i></button>
+</div>
+</div>
+<div class=product-card>
+<img src="https://archive.org/download/20250702_20250702_1440/%D9%88%D8%AC%D8%A8%D8%A9%20%D9%83%D8%A8%D8%A7%D8%A8%20%D8%AF%D8%AC%D8%A7%D8%AC.png" alt="وجبة كباب دجاج">
+<div class=card-content>
+<h3>وجبة كباب دجاج</h3>
+<p>وجبة كباب دجاج مميزة، خفيفة ولذيذة، لمحبي الدجاج المشوي.</p>
+<span class=price>6.50 د.أ</span>
+<button class=order-button data-product="وجبة كباب دجاج">اطلب الآن <i class="fas fa-phone-alt"></i></button>
+</div>
+</div>
+</div>
+</div>
+<div class=menu-section id=sandwiches-section>
+<h2 class=section-title>قسم الساندويشات</h2>
+<div class=products-grid>
+<div class=product-card>
+<img src="https://archive.org/download/20250702_20250702_1440/%D8%B3%D8%A7%D9%86%D8%AF%D9%88%D9%8A%D8%B4%20%D9%83%D8%A8%D8%A7%D8%A8%20%D8%AF%D8%A8%D9%84.png" alt="ساندويش كباب دبل">
+<div class=card-content>
+<h3>ساندويش كباب دبل</h3>
+<p>ساندويش كباب بقطعتين من الكباب، لمحبي الكباب الأصيل.</p>
+<span class=price>3.75 د.أ</span>
+<button class=order-button data-product="ساندويش كباب دبل">اطلب الآن <i class="fas fa-phone-alt"></i></button>
+</div>
+</div>
+<div class=product-card>
+<img src="https://archive.org/download/20250702_20250702_1440/%D8%B3%D8%A7%D9%86%D8%AF%D9%88%D9%8A%D8%B4%20%D9%83%D8%A8%D8%A7%D8%A8%20%D8%A8%D8%A7%D8%B0%D9%86%D8%AC%D8%A7%D9%86.png" alt="ساندويش كباب باذنجان">
+<div class=card-content>
+<h3>ساندويش كباب باذنجان</h3>
+<p>مزيج فريد من كباب الغماس والباذنجان المشوي، مذاق لا يُقاوم.</p>
+<span class=price>3.25 د.أ</span>
+<button class=order-button data-product="ساندويش كباب باذنجان">اطلب الآن <i class="fas fa-phone-alt"></i></button>
+</div>
+</div>
+<div class=product-card>
+<img src="https://archive.org/download/20250704_20250704_1228/%D8%B3%D8%A7%D9%86%D8%AF%D9%88%D9%8A%D8%B4%20%D9%84%D9%8A%D9%91%D8%A9.png
+
+" alt="ساندويش ليّة">
+<div class=card-content>
+<h3>ساندويش ليّة</h3>
+<p>ساندويش الليّة الشهي، نكهة غنية ومميزة.</p>
+<span class=price>2.50 د.أ</span>
+<button class=order-button data-product="ساندويش ليّة">اطلب الآن <i class="fas fa-phone-alt"></i></button>
+</div>
+</div>
+<div class=product-card>
+<img src="https://archive.org/download/20250704_20250704_1228/%D8%B3%D8%A7%D9%86%D8%AF%D9%88%D9%8A%D8%B4%20%D8%B1%D9%88%D8%B3%D9%8A%D8%A9.png
+
+" alt="ساندويش روسيّة">
+<div class=card-content>
+<h3>ساندويش روسيّة</h3>
+<p>ساندويش روسيّة مميز: 2 كباب + 1 ليّة، تجربة طعم لا تُنسى.</p>
+<span class=price>4.50 د.أ</span>
+<button class=order-button data-product="ساندويش روسيّة">اطلب الآن <i class="fas fa-phone-alt"></i></button>
+</div>
+</div>
+<div class=product-card>
+<img src="https://archive.org/download/20250704_20250704_1228/%D8%B3%D8%A7%D9%86%D8%AF%D9%88%D9%8A%D8%B4%20%D8%A7%D9%84%D8%B3%D9%84%D8%B7%D9%8A%D8%A9.png
+
+" alt="ساندويش السلطية">
+<div class=card-content>
+<h3>ساندويش السلطية</h3>
+<p>ساندويش السلطية الأصيل: 2 معلاق + 1 ليّة، وجبة متكاملة.</p>
+<span class=price>5.00 د.أ</span>
+<button class=order-button data-product="ساندويش السلطية">اطلب الآن <i class="fas fa-phone-alt"></i></button>
+</div>
+</div>
+</div>
+</div>
+<div class=menu-section id=sauces-section>
+<h2 class=section-title>قسم الإضافات</h2>
+<div class=products-grid>
+<div class=product-card>
+<img src="https://i.ytimg.com/vi/6GaVa6mKNZY/maxresdefault.jpg
+
+" alt="مخلل مشكل بلدي">
+<div class=card-content>
+<h3>مخلل مشكل بلدي</h3>
+<p>تشكيلة من المخللات البلدية الطازجة، تضاف لمذاق لا يُنسى.</p>
+<span class=price>1.00 د.أ</span>
+<button class=order-button data-product="مخلل مشكل بلدي">اطلب الآن <i class="fas fa-phone-alt"></i></button>
+</div>
+</div>
+<div class=product-card>
+<img src="https://kitchen.sayidaty.net/uploads/small/01/014956fd27ce26f1ac9d718c5b2fb8b7_w750_h750.jpg
+
+" alt="صلصة حارة بلدية">
+<div class=card-content>
+<h3>صلصة حارة بلدية</h3>
+<p>صلصة حارة محضرة من الفلفل الطازج، لعشاق النكهات القوية.</p>
+<span class=price>1.25 د.أ</span>
+<button class=order-button data-product="صلصة حارة بلدية">اطلب الآن <i class="fas fa-phone-alt"></i></button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class=footer>
+<a href=https://www.instagram.com/laithdeveloper/ target=_blank class=instagram-button>
+<i class="fab fa-instagram"></i>
+</a>
+<p>© 2025 حقوق الطبع والنشر ل Laith AL-Arabiat</p>
+</footer>
+</div>
+
+<div id="callOptionsModal" class="call-options-modal">
+    <div class="modal-content">
+        <button class="modal-close-button" id="closeModalButton">×</button>
+        <h2>اختر فرع الاتصال</h2>
+        <div class="modal-buttons">
+            <a href="tel:0790586053" class="modal-button">
+                فرع شارع المدينة <i class="fas fa-phone-alt"></i>
+            </a>
+            <a href="tel:0790379012" class="modal-button">
+                فرع مجمع الداوود <i class="fas fa-phone-alt"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+    const introScreen=document.getElementById('intro-screen');
+    const introBurstContainer=document.querySelector('.intro-burst-container');
+    const mainContent=document.getElementById('main-content');
+    const animatedFullBackground=document.getElementById('animated-full-background');
+    const navTabButtons=document.querySelectorAll('.nav-tab-button');
+    const menuSections=document.querySelectorAll('.menu-section');
+    const orderButtons=document.querySelectorAll('.order-button');
+
+    // Modal elements
+    const callOptionsModal = document.getElementById('callOptionsModal');
+    const closeModalButton = document.getElementById('closeModalButton');
+
+    const foodParticlesEmojis=['🥩','🍖']; // تم التعديل هنا: 🥙 استُبدلت بـ 🥩
+    
+    const createBurstParticles=()=>{
+        const numBurstParticles=35;
+        for(let i=0;i<numBurstParticles;i++){
+            const particle=document.createElement('span');
+            particle.classList.add('intro-burst-particle');
+            particle.textContent=foodParticlesEmojis[Math.floor(Math.random()*foodParticlesEmojis.length)];
+            const size=Math.random()*35+25;
+            particle.style.fontSize=`${size}px`;
+            const angle=Math.random()*2*Math.PI;
+            const radius=Math.random()*180+100;
+            particle.style.setProperty('--x-offset',`${Math.cos(angle)*radius}px`);
+            particle.style.setProperty('--y-offset',`${Math.sin(angle)*radius}px`);
+            particle.style.animationDelay=`${Math.random()*0.5}s`;
+            introBurstContainer.appendChild(particle);
+        }
+    };
+    
+    setTimeout(()=>{
+        createBurstParticles();
+    },500);
+    
+    setTimeout(()=>{
+        introScreen.classList.add('hidden');
+        mainContent.classList.remove('hidden');
+        mainContent.classList.add('visible');
+        createBackgroundParticles();
+    },4000);
+
+    function createBackgroundParticles(){
+        const numParticles=30;
+        for(let i=0;i<numParticles;i++){
+            const particle=document.createElement('span');
+            particle.classList.add('food-particle');
+            particle.textContent=foodParticlesEmojis[Math.floor(Math.random()*foodParticlesEmojis.length)];
+            const size=Math.random()*20+20;
+            particle.style.fontSize=`${size}px`;
+            const startX=Math.random()*100;
+            const startY=Math.random()*100;
+            const endX=Math.random()*100;
+            const endY=Math.random()*100;
+            const rotateEnd=Math.random()*720+360;
+            particle.style.setProperty('--x-start',`${startX}vw`);
+            particle.style.setProperty('--y-start',`${startY}vh`);
+            particle.style.setProperty('--x-end',`${endX}vw`);
+            particle.style.setProperty('--y-end',`${endY}vh`);
+            particle.style.setProperty('--rotate-end',`${rotateEnd}deg`);
+            particle.style.animationDelay=`${Math.random()*20}s`;
+            particle.style.animationDuration=`${Math.random()*20+30}s`;
+            animatedFullBackground.appendChild(particle);
+        }
+    }
+    
+    const switchSection=(targetId)=>{
+        navTabButtons.forEach(button=>button.classList.remove('active'));
+        menuSections.forEach(section=>section.classList.remove('active'));
+        const activeButton=document.querySelector(`.nav-tab-button[data-target="${targetId}"]`);
+        const activeSection=document.getElementById(targetId);
+        if(activeButton){
+            activeButton.classList.add('active');
+        }
+        if(activeSection){
+            activeSection.classList.add('active');
+        }
+    };
+    
+    navTabButtons.forEach(button=>{
+        button.addEventListener('click',()=>{
+            const targetId=button.dataset.target;
+            switchSection(targetId);
+        });
+    });
+    
+    switchSection('ghmas-section');
+    
+    orderButtons.forEach(button=>{
+        button.addEventListener('click',(event)=>{
+            event.stopPropagation();
+            callOptionsModal.classList.add('active'); // Show the modal
+        });
+    });
+
+    // Close modal when close button is clicked
+    closeModalButton.addEventListener('click', () => {
+        callOptionsModal.classList.remove('active');
+    });
+
+    // Close modal when clicking outside the modal content
+    callOptionsModal.addEventListener('click', (event) => {
+        if (event.target === callOptionsModal) {
+            callOptionsModal.classList.remove('active');
+        }
+    });
+
+    const headerVideo = document.querySelector('.header-video');
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            if (headerVideo) {
+                headerVideo.play().catch(e => {
+                    console.warn('Video autoplay prevented on visibility change:', e);
+                });
+            }
+        }
+    });
+
+});
+</script>
+</body>
+</html>
